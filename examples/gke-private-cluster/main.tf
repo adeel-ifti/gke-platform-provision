@@ -10,6 +10,8 @@ terraform {
   
   backend "gcs" {
     bucket  = "tf-state-pro"
+    #credentials = "${file("./gcloud-sa.json")}"
+    credentials = "gcloud-sa.json"
     prefix  = "terraform/state"
    }
 
@@ -23,14 +25,14 @@ provider "google" {
   # version = "~> 2.9.0"
   project = "${var.project}"
   region  = "${var.region}"
-  #  credentials = "${file("./gcloud-sa.json")}"
+  credentials = "${file("./gcloud-sa.json")}"
 }
 
 provider "google-beta" {
   # version = "~> 2.9.0"
   project = "${var.project}"
   region  = "${var.region}"
-  #credentials = "${file("./gcloud-sa.json")}"
+  credentials = "${file("./gcloud-sa.json")}"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

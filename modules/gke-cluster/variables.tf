@@ -43,7 +43,11 @@ variable "description" {
   type        = string
   default     = ""
 }
-
+variable "helm_version" {
+  description = "Helm version be installed in cluster"
+  type        = string
+  default = "v2.11.0"
+}
 variable "kubernetes_version" {
   description = "The Kubernetes version of the masters. If set to 'latest' it will pull latest available version in the selected region."
   type        = string
@@ -175,6 +179,11 @@ variable "enable_network_policy" {
   description = "Whether to enable Kubernetes NetworkPolicy on the master, which is required to be enabled to be used on Nodes."
   type        = bool
   default     = true
+}
+variable "helm_account_name" {
+  description = "name of service account of tiller"
+  type        = string
+  default      = "helm-service-account"
 }
 
 variable "basic_auth_username" {
