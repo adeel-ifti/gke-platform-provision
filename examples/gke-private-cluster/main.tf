@@ -88,7 +88,7 @@ module "gke_cluster" {
 resource "google_container_node_pool" "node_pool" {
   provider = "google-beta"
 
-  name     = "private-pool"
+  name     = "private-pool-1"
   project  = "${var.project}"
   location = "${var.location}"
   cluster  = "${module.gke_cluster.name}"
@@ -104,7 +104,17 @@ resource "google_container_node_pool" "node_pool" {
     auto_repair  = "true"
     auto_upgrade = "true"
   }
+  provisioner "local-exec" {
+    command = "./install.sh"
+    
+    
 
+    environment = {
+      CLUSTER_NAME = "${module.gke_cluster.name}"
+      REGION = "${var.region}"
+      PROJECT_ID = "${var.project}"
+    }
+    }
   node_config {
     image_type   = "COS"
     machine_type = "n1-standard-1"
@@ -129,6 +139,8 @@ resource "google_container_node_pool" "node_pool" {
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
     ]
+    
+    
   }
 
   
