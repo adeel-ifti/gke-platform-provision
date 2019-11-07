@@ -13,7 +13,7 @@ pipeline{
      stage('terraform build'){
            steps{
             
-             sh "docker run -it -v \$(pwd):/dt-infra muhammadhanzala/terraform-test:v2"
+             sh "docker run  -v \$(pwd):/dt-infra muhammadhanzala/terraform-test:v2"
          
          }
      }
