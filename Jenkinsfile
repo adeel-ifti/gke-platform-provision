@@ -10,14 +10,21 @@ pipeline{
              sh "ls"
          }
      }
-     stage('terraform build'){
+     stage('terraform planing'){
            steps{
-            sh "cd examples/gke-private-cluster/ && terraform init && terraform apply --auto-approve"
-            //  sh "docker run -v \$(pwd):/dt-infra muhammadhanzala/terraform-test:v2 bash -c 'cd /dt-infra/examples/gke-private-cluster && terraform init && terraform apply --auto-approve'"
-            //  sh "docker run -v \$(pwd):/dt-infra muhammadhanzala/terraform-test:v3 bash -c 'cd /dt-infra/examples/gke-private-cluster/ && terraform init && terraform apply --auto-approve'"
+            sh "cd examples/gke-private-cluster"
+            sh "terraform plan --out tfplan"
+            
          }
      }
-     
+     stage('Approving terraform plan'){
+           steps{
+          
+            sh "terraform apply  tfplan"
+            
+         }
+     }
+
      }
 
      }
