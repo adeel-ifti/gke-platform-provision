@@ -12,15 +12,15 @@ pipeline{
      }
      stage('terraform planing'){
            steps{
-            sh "cd examples/gke-private-cluster"
-            sh "terraform plan --out tfplan"
+            sh "cd examples/gke-private-cluster && terraform plan --out tfplan"
+            
             
          }
      }
      stage('Approving terraform plan'){
            steps{
           
-            sh "terraform apply  tfplan"
+            sh "cd examples/gke-private-cluster && terraform apply  tfplan"
             
          }
      }
