@@ -104,17 +104,17 @@ resource "google_container_node_pool" "node_pool" {
     auto_repair  = "true"
     auto_upgrade = "true"
   }
-  provisioner "local-exec" {
-    command = "./install.sh"
+  # provisioner "local-exec" {
+  #   command = "./install.sh"
     
     
 
-    environment = {
-      CLUSTER_NAME = "${module.gke_cluster.name}"
-      REGION = "${var.region}"
-      PROJECT_ID = "${var.project}"
-    }
-    }
+  #   environment = {
+  #     CLUSTER_NAME = "${module.gke_cluster.name}"
+  #     REGION = "${var.region}"
+  #     PROJECT_ID = "${var.project}"
+  #   }
+  #   }
   node_config {
     image_type   = "COS"
     machine_type = "n1-standard-1"
