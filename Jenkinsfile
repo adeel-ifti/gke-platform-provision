@@ -30,7 +30,7 @@ pipeline{
           
             sh "cd examples/gke-private-cluster && gcloud auth activate-service-account --key-file gcloud-sa.json"
             sh "gcloud beta container clusters get-credentials example-private-cluster --region europe-west3 --project stunning-crane-234500"
-
+            sh "kubectl cluster-info"
          }
      }
      stage('Deploying helm chart'){
