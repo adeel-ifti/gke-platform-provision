@@ -35,9 +35,9 @@ pipeline{
      }
      stage('Deploying helm chart'){
            steps{
-          
+             sh "helm init"
              sh "helm list"  
-             sh "helm install ingress stable/nginx-ingress  --namespace mypod"
+             sh "helm  install "
 
          }
      }
