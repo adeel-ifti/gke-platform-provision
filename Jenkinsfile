@@ -37,7 +37,7 @@ pipeline{
            steps{
              sh "helm init"
              sh "helm list"  
-             sh "helm  install "
+             sh "helm  install stable/nginx-ingress --generate-name"
 
          }
      }
