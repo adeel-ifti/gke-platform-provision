@@ -21,7 +21,7 @@ pipeline{
            steps{
           
             sh "cd examples/gke-private-cluster && terraform apply  tfplan"
-            helm install abc stable/nginx-ingress  --namespace mypod
+            
 
          }
      }
