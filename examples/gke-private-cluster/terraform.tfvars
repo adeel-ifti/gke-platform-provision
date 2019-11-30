@@ -1,3 +1,3 @@
   region = "europe-west3"
-  project= "stunning-crane-234500"
+  project= "your-project-name"
   location = "europe-west3"
