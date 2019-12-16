@@ -6,7 +6,7 @@
 variable "project" {
   description = "The project ID where all resources will be launched."
   type        = "string"
-  default = "stunning-crane-234500"
+  default = "helical-button-259312"
 }
 
 variable "location" {
@@ -30,6 +30,12 @@ variable "cluster_name" {
   description = "The name of the Kubernetes cluster."
   type        = "string"
   default     = "example-private-cluster"
+}
+variable "bucket_name"{
+  description = "The name of bucket for backend"
+  type = "string"
+  default = "test-tf-state-1"
+
 }
 
 variable "cluster_service_account_name" {

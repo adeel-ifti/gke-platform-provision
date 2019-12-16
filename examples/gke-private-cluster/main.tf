@@ -9,9 +9,10 @@ terraform {
   required_version = ">= 0.12.7"
   
   backend "gcs" {
-    bucket  = "tf-state-pro"
+    bucket  = "test-tf-state-1"
+    # bucket = "${var.bucket_name}"
     #credentials = "${file("./gcloud-sa.json")}"
-    credentials = "gcloud-sa.json"
+    #  credentials = "gcloud-sa.json"
     prefix  = "terraform/state"
    }
 
@@ -25,14 +26,14 @@ provider "google" {
   # version = "~> 2.9.0"
   project = "${var.project}"
   region  = "${var.region}"
-  credentials = "${file("./gcloud-sa.json")}"
+  # credentials = "${file("./gcloud-sa.json")}"
 }
 
 provider "google-beta" {
   # version = "~> 2.9.0"
   project = "${var.project}"
   region  = "${var.region}"
-  credentials = "${file("./gcloud-sa.json")}"
+  # credentials = "${file("./gcloud-sa.json")}"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -50,7 +51,8 @@ module "gke_cluster" {
   project  = "${var.project}"
   location = "${var.location}"
   network = "${module.vpc_network.network}"
-
+ 
+ 
   # We're deploying the cluster in the 'public' subnetwork to allow outbound internet access
   # See the network access tier table for full details:
   # https://github.com/gruntwork-io/terraform-google-network/tree/master/modules/vpc-network#access-tier
@@ -78,8 +80,18 @@ module "gke_cluster" {
     },
   ]
 
-  cluster_secondary_range_name = "${module.vpc_network.public_subnetwork_secondary_range_name}"
+  cluster_secondary_range_name = module.vpc_network.public_subnetwork_secondary_range_name
 }
+module "helm"{
+  source = "../../modules/helm"
+  endpoint = module.gke_cluster.endpoint
+  client_key = module.gke_cluster.client_key
+  client_certificate = module.gke_cluster.client_certificate
+  client_ca_certificate= module.gke_cluster.cluster_ca_certificate
+  dependednt_variable = google_container_node_pool.node_pool.name
+
+}
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # CREATE A NODE POOL
@@ -117,7 +129,7 @@ resource "google_container_node_pool" "node_pool" {
   #   }
   node_config {
     image_type   = "COS"
-    machine_type = "n1-standard-1"
+    machine_type = "n1-standard-2"
 
     labels = {
       private-pools-example = "true"
@@ -178,7 +190,7 @@ module "gke_service_account" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 module "vpc_network" {
-  source = "github.com/gruntwork-io/terraform-google-network.git//modules/vpc-network"
+  source = "../../modules/vpc-network"
 
   name_prefix = "${"${var.cluster_name}"}-network-${random_string.suffix.result}"
   project     = "${var.project}"
