@@ -9,11 +9,18 @@ terraform {
   required_version = ">= 0.12.7"
   
   backend "gcs" {
+<<<<<<< HEAD
     bucket  = "test-tf-state-1"
     # bucket = "${var.bucket_name}"
     #credentials = "${file("./gcloud-sa.json")}"
     #  credentials = "gcloud-sa.json"
     prefix  = "terraform/state"
+=======
+    bucket  = "state-file-bucket-name"
+    #credentials = "${file("./gcloud-sa.json")}"
+    credentials = "gcloud-sa.json"
+    prefix  = "tf-state"
+>>>>>>> e79b587762e4d3cb5f9ceb4c87f543d44d2cccbd
    }
 
 }
