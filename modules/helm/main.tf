@@ -36,14 +36,14 @@ resource "helm_release" "nginx-ingress" {
 }
 resource "helm_release" "istio-init" {
   name  = "istio-init"
-  chart = "../../charts/istio-init"
+  chart = "../../modules/helm/istio/istio-init"
   namespace = "istio-system"
   
 
 }
 resource "helm_release" "istio" {
   name  = "istio"
-  chart = "../../charts/istio"
+  chart = "../../modules/helm/istio/istio"
   namespace = "istio-system"
   depends_on = ["null_resource.delay"]
    set {
